@@ -50,10 +50,10 @@ public class FileAdapter extends ArrayAdapter<File> {
         if (name != null) {
             if (position == 0) {
                 name.setText(f.getAbsolutePath());
-                id.setText("0");
+                id.setText("home");
             } else if (position == 1) {
                 name.setText(f.getAbsolutePath());
-                id.setText("0");
+                id.setText("back");
             } else if (f.isDirectory()) {
                 name.setText(f.getName());
                 id.setText("dir");

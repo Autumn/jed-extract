@@ -16,6 +16,14 @@ import android.widget.*;
  */
 public class BrowserActivity extends ListActivity {
 
+    private static final String FILE = "file";
+    private static final String PATH = "path";
+    private static final String DIR = "dir";
+    private static final String HOME = "home";
+    private static final String BACK = "back";
+    private static final String MODE = "mode";
+    private static final String NO_SELECT = "0";
+
     private File currentNode = null;
     private File lastNode = null;
     private File rootNode = null;
@@ -52,8 +60,8 @@ public class BrowserActivity extends ListActivity {
             switch (item.getItemId()) {
                 case R.id.select_file:
                     Intent result = new Intent(BrowserActivity.this, MainActivity.class);
-                    result.putExtra("path", selectedFullPath);
-                    result.putExtra("file", selectedFile);
+                    result.putExtra(PATH, selectedFullPath);
+                    result.putExtra(FILE, selectedFile);
                     setResult(1, result);
                     finish(); // Action picked, so close the CAB
                 default:
@@ -73,7 +81,7 @@ public class BrowserActivity extends ListActivity {
         setContentView(R.layout.browser);
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("mode").equals("dir")) {
+        if (bundle.getString(MODE).equals(DIR)) {
             dirMode = 1;
         }
 
@@ -92,14 +100,19 @@ public class BrowserActivity extends ListActivity {
                 TableRow selectedItem = (TableRow) v;
                 TextView name = (TextView) selectedItem.getChildAt(1);
                 TextView row_id = (TextView) selectedItem.getChildAt(2);
-                if (row_id.getText().equals("0") || row_id.getText().equals("dir") && dirMode == 0) {
+                if (row_id.getText().equals(BACK) || dirMode == 0 && (row_id.getText().equals(HOME) || row_id.getText().equals(DIR))) {
                     return false;
                 }
                 actionMode = BrowserActivity.this.startActionMode(actionModeCallback);
 
                 actionMode.setTitle(name.getText());
                 selectedFile = name.getText().toString();
-                selectedFullPath = adapter.getCurrentPath() + "/" + name.getText();
+
+                if (row_id.getText().equals(HOME)) {
+                    selectedFullPath = name.getText().toString();
+                } else {
+                    selectedFullPath = adapter.getCurrentPath() + "/" + name.getText();
+                }
                 actionMode.setSubtitle(selectedFile);
                 return true;
             }
