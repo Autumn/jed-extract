@@ -18,7 +18,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="File"
-                android:id="@+id/fileOption" android:layout_gravity="left|center_vertical"/>
+                android:id="@+id/fileOption" android:layout_gravity="left|center_vertical" android:textColor="#f3f3f3"/>
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:layout_gravity="left|center_vertical">
