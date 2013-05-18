@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/finish_selection"
-          android:icon="@drawable/ic_clear_normal"
-          android:title="Exit"
+    <item android:id="@+id/select_file"
+          android:icon="@drawable/ic_menu_forward"
+          android:title="Select"
           android:showAsAction="always|withText"/>
-
 </menu>

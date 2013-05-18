@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="."
-                    android:id="@+id/textView"
+                    android:id="@+id/filePath"
                     android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
                     android:layout_alignParentRight="true" android:paddingLeft="50dp" android:paddingTop="10dp"
                     android:paddingRight="10dp" android:paddingBottom="10dp" android:singleLine="false"
@@ -37,8 +37,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Browse"
-                    android:id="@+id/fileBrowse" android:layout_alignBottom="@+id/textView"
-                    android:layout_alignParentRight="true" android:singleLine="false" android:onClick="selectPath"/>
+                    android:id="@+id/fileBrowse" android:layout_alignBottom="@+id/filePath"
+                    android:layout_alignParentRight="true" android:singleLine="false" android:onClick="selectFile"/>
         </RelativeLayout>
         <RadioButton
                 android:layout_width="fill_parent"
@@ -49,14 +49,14 @@
                         android:layout_gravity="left|center_vertical" android:id="@+id/relativeLayout">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textAppearance="?android:attr/textAppearanceSmall" android:text="."
-                      android:id="@+id/textView2" android:layout_alignParentTop="true"
+                      android:id="@+id/dirPath" android:layout_alignParentTop="true"
                       android:layout_alignParentLeft="true" android:layout_alignParentRight="true"
                       android:paddingLeft="50dp" android:paddingTop="10dp" android:paddingRight="10dp"
                       android:paddingBottom="10dp" android:textColor="#a5a4a8"/>
             <Button style="?android:attr/buttonStyleSmall" android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:text="Browse" android:id="@+id/dirBrowse"
-                    android:layout_alignBottom="@+id/textView2" android:layout_alignParentRight="true"
-                    android:onClick="selectPath"/>
+                    android:layout_alignBottom="@+id/dirPath" android:layout_alignParentRight="true"
+                    android:onClick="selectDir"/>
         </RelativeLayout>
     </RadioGroup>
 </RelativeLayout>

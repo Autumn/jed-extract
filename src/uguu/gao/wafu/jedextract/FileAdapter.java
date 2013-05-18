@@ -18,6 +18,9 @@ public class FileAdapter extends ArrayAdapter<File> {
     private ArrayList<File> items;
     private Context c = null;
 
+    public String currentPath = "";
+
+
     public FileAdapter(Context context, int textViewResourceId, ArrayList<File> items) {
         super(context, textViewResourceId, items);
         this.items = items;
@@ -33,19 +36,30 @@ public class FileAdapter extends ArrayAdapter<File> {
         }
         TextView name = null;
         ImageView icon = null;
+        TextView id = null;
 
         File f = items.get(position);
+        currentPath = items.get(1).getAbsolutePath();
+
         if (f != null) {
             name = (TextView) v.findViewById(R.id.fileName);
             icon = (ImageView) v.findViewById(R.id.fileTypeIcon);
+            id = (TextView) v.findViewById(R.id.typeId);
+
         }
         if (name != null) {
             if (position == 0) {
                 name.setText(f.getAbsolutePath());
+                id.setText("0");
             } else if (position == 1) {
                 name.setText(f.getAbsolutePath());
+                id.setText("0");
+            } else if (f.isDirectory()) {
+                name.setText(f.getName());
+                id.setText("dir");
             } else {
-            name.setText(f.getName());
+                name.setText(f.getName());
+                id.setText("file");
             }
         }
 
@@ -60,6 +74,12 @@ public class FileAdapter extends ArrayAdapter<File> {
                 icon.setImageResource(R.drawable.ic_menu_attachment);
             }
         }
+
+
         return v;
+    }
+
+    public String getCurrentPath() {
+        return currentPath;
     }
 }
