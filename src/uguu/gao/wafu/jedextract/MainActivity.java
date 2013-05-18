@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.inputmethodservice.ExtractEditText;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,11 +29,19 @@ public class MainActivity extends Activity {
     private String selectedFile = "";
     private int type = FILE_TYPE;
 
+    MainPagerAdapter mainPagerAdapter;
+    ViewPager viewPager;
+
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.main_fragment_container);
+
+        mainPagerAdapter = new MainPagerAdapter(getFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(mainPagerAdapter);
     }
 
     @Override
