@@ -12,6 +12,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends Activity {
 
     private static final String FILE = "file";
@@ -68,10 +70,11 @@ public class MainActivity extends Activity {
         ExtractWords extractor = new ExtractWords(selectedPath, selectedFile, type);
         if (extractor.isValid()) {
             if (extractor.extract()) {
+                ArrayList<String> words = extractor.listWords();
 
             }
         } else {
-            Toast.makeText(this, "invalid file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Not a valid .anki file.", Toast.LENGTH_SHORT).show();
         }
     }
 
