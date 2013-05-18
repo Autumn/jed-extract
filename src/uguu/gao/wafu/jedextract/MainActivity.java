@@ -71,7 +71,15 @@ public class MainActivity extends Activity {
         if (extractor.isValid()) {
             if (extractor.extract()) {
                 ArrayList<String> words = extractor.listWords();
-
+                Intent i = new Intent(MainActivity.this, ResultsActivity.class);
+                Bundle bundle = new Bundle();
+                ArrayList<CharSequence> cs_words = new ArrayList<CharSequence>();
+                for (String word: words) {
+                    cs_words.add(word);
+                }
+                bundle.putCharSequenceArrayList("list", cs_words);
+                i.putExtras(bundle);
+                startActivity(i);
             }
         } else {
             Toast.makeText(this, "Not a valid .anki file.", Toast.LENGTH_SHORT).show();
