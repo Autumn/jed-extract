@@ -24,6 +24,9 @@ public class BrowserActivity extends ListActivity {
     private static final String MODE = "mode";
     private static final String NO_SELECT = "0";
 
+    private static final int SELECTED = 1;
+    private static final int NOT_SELECTED = 0;
+
     private File currentNode = null;
     private File lastNode = null;
     private File rootNode = null;
@@ -62,7 +65,7 @@ public class BrowserActivity extends ListActivity {
                     Intent result = new Intent(BrowserActivity.this, MainActivity.class);
                     result.putExtra(PATH, selectedFullPath);
                     result.putExtra(FILE, selectedFile);
-                    setResult(1, result);
+                    setResult(SELECTED, result);
                     finish(); // Action picked, so close the CAB
                 default:
                     return false;
@@ -147,7 +150,7 @@ public class BrowserActivity extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.finish_selection:
-                setResult(0, null);
+                setResult(NOT_SELECTED, null);
                 finish();
             default:
                 return super.onOptionsItemSelected(item);

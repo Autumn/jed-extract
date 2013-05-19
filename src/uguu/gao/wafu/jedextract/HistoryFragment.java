@@ -29,11 +29,21 @@ public class HistoryFragment extends ListFragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        fillHistory();
+    }
+
+    /* Fills the view with the contents of the database */
+
     public void fillHistory() {
         ListView list = (ListView) v.findViewById(android.R.id.list);
         SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getReadableDatabase();
 
-        Cursor history, history1;
+        Cursor history;
+
+        // Selects the data from the database and creates the Adapter
 
         try {
             db.beginTransaction();
@@ -48,31 +58,34 @@ public class HistoryFragment extends ListFragment {
             list.setAdapter(adapter);
         }
 
+        // Code to handle pressing on a list item : opens the selected content in a ResultsActivity
+
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 TextView itemId = (TextView) v.findViewById(R.id.idText);
                 String dbId = itemId.getText().toString();
                 SQLiteDatabase db = DatabaseHelper.getInstance(getActivity()).getReadableDatabase();
 
-                Cursor history;
+                Cursor entry;
 
                 try {
                     db.beginTransaction();
-                    //history = db.rawQuery("select content from history where _id = ?", new String[] {dbId});
-                    history = db.query("history", new String[]{"content"}, "_id=?", new String[] {dbId}, null, null, null, null);
+                    entry = db.query("history", new String[]{"content"}, "_id=?", new String[] {dbId}, null, null, null, null);
                     db.setTransactionSuccessful();
                 } finally {
                     db.endTransaction();
                 }
-                int count = history.getColumnIndex("content");
-                history.moveToFirst();
-                String content = history.getString(0);
+
+                entry.moveToFirst();
+                String content = entry.getString(0);
+
                 // build CharSequence array to pass into ResultsActivity
                 String[] split = content.split("\n");
                 ArrayList<CharSequence> cs_words = new ArrayList();
                 for (String word: split) {
                     cs_words.add(word);
                 }
+
                 Bundle bundle = new Bundle();
                 Intent i = new Intent(getActivity(), ResultsActivity.class);
                 bundle.putCharSequenceArrayList("list", cs_words);
@@ -83,11 +96,6 @@ public class HistoryFragment extends ListFragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        fillHistory();
-    }
 
 
 }
