@@ -1,7 +1,9 @@
 package uguu.gao.wafu.jedextract;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.inputmethodservice.ExtractEditText;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -86,6 +88,30 @@ public class MainActivity extends Activity {
                 for (String word: words) {
                     cs_words.add(word);
                 }
+                // write to history
+
+                StringBuilder sb = new StringBuilder();
+                for (CharSequence word: words) {
+                    sb.append(word);
+                    sb.append("\n");
+                }
+                sb.deleteCharAt(sb.length() - 1); // delete the final newline
+                String content = sb.toString();
+
+                SQLiteDatabase db = DatabaseHelper.getInstance(this).getWritableDatabase();
+                try {
+                    db.beginTransaction();
+                    ContentValues cv = new ContentValues();
+                    cv.put("origin_file", selectedPath);
+                    cv.put("content", content);
+                    cv.put("count", words.size());
+                    db.insert("HISTORY", null, cv);
+                    db.setTransactionSuccessful();
+                } finally {
+                    db.endTransaction();
+                    db.close();
+                }
+
                 bundle.putCharSequenceArrayList("list", cs_words);
                 i.putExtras(bundle);
                 startActivity(i);
