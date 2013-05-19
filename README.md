@@ -9,6 +9,7 @@ Version 1.0 complete!
 
 Note: Will only work with the exported .anki files from JED.
 
-= Issues =
+Issues 
+------
 
 - Invalid .anki files cause the app to crash. Try to avoid directories with .anki files from different sources. Fix is being worked on.
