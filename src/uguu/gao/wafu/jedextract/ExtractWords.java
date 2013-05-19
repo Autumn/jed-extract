@@ -93,7 +93,8 @@ public class ExtractWords {
                     words.add(word);
                 }
             } catch (Exception e) {
-                // shit
+                int i = db.last_error();
+
             }
             try {
                 db.close();
