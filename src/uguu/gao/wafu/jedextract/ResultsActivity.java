@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.*;
 import android.widget.*;
 
@@ -56,6 +57,10 @@ public class ResultsActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results);
+
+        // set up the Up button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         Bundle bundle = getIntent().getExtras();
         ArrayList<CharSequence> words = bundle.getCharSequenceArrayList("list");
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, R.layout.results_row, words);
@@ -73,8 +78,8 @@ public class ResultsActivity extends ListActivity {
         // set the long click listener
 
         ListView lv = this.getListView();
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 v.setSelected(true);
                 TextView tv = (TextView) v;
                 selectedShareText = tv.getText().toString();
@@ -83,7 +88,6 @@ public class ResultsActivity extends ListActivity {
 
                 actionMode.setTitle("Share Word");
                 actionMode.setSubtitle(selectedShareText);
-                return true;
             }
         });
     }
@@ -99,12 +103,13 @@ public class ResultsActivity extends ListActivity {
             case R.id.share_results:
                 shareText(listShareText, 0);
                 return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    /* Share the selected content to external apps, or share the entire list */
 
     public void shareText(String shareText, int type) {
         String shareHeading = "Share your word list to another app.";

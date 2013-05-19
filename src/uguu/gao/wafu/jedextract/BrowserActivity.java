@@ -3,6 +3,7 @@ package uguu.gao.wafu.jedextract;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.*;
 
 import java.io.File;
@@ -83,6 +84,9 @@ public class BrowserActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.browser);
 
+        // set up the Up button
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         Bundle bundle = getIntent().getExtras();
         if (bundle.getString(MODE).equals(DIR)) {
             dirMode = 1;
@@ -124,39 +128,6 @@ public class BrowserActivity extends ListActivity {
         refreshFileList();
     }
 
-    private void refreshFileList() {
-        if (rootNode == null) {
-            rootNode = new File(Environment.getExternalStorageDirectory().toString());
-        }
-
-        if (currentNode == null) {
-            currentNode = rootNode;
-        }
-
-        lastNode = currentNode;
-        File[] _files = currentNode.listFiles();
-        files.clear();
-        files.add(rootNode);
-        files.add(lastNode);
-        if (_files != null) {
-            for (int i = 0; i < _files.length; i++) {
-                files.add(_files[i]);
-            }
-        }
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.finish_selection:
-                setResult(NOT_SELECTED, null);
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle state) {
         state.putSerializable("root_node", rootNode);
@@ -188,5 +159,42 @@ public class BrowserActivity extends ListActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //case R.id.finish_selection:
+            //    setResult(NOT_SELECTED, null);
+            //    finish();
+            case android.R.id.home:
+                setResult(NOT_SELECTED, null);
+                finish();
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void refreshFileList() {
+        if (rootNode == null) {
+            rootNode = new File(Environment.getExternalStorageDirectory().toString());
+        }
+
+        if (currentNode == null) {
+            currentNode = rootNode;
+        }
+
+        lastNode = currentNode;
+        File[] _files = currentNode.listFiles();
+        files.clear();
+        files.add(rootNode);
+        files.add(lastNode);
+        if (_files != null) {
+            for (int i = 0; i < _files.length; i++) {
+                files.add(_files[i]);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
 }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MainActivity</string>
+    <string name="app_name">JED Extract Tool</string>
+    <string name="browser_action_text">File Browser</string>
+    <string name="results_action_text">Extracted Words</string>
 </resources>
